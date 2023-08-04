@@ -5,36 +5,32 @@ require 'csv'
 
 class StatTracker
   attr_reader :game_statistics, :season_statistics, :league_statistics
-  def initialize(games_data, teams_data, game_teams_data)
-    @games = games_data
-    @teams = teams_data
-    @game_teams = game_teams_data
+  def initialize(locations)
+    @game_statistics = GameStatistics.new(locations)
+
   end
 
   def self.from_csv(locations)
-    games_data = CSV.read locations[:games], headers: true, header_converters: :symbol
-    teams_data = CSV.read locations[:teams], headers: true, header_converters: :symbol
-    game_teams_data = CSV.read locations[:game_teams], headers: true, header_converters: :symbol
-    new(games_data, teams_data, game_teams_data)
+    StatTracker.new(locations)
   end
 
   def highest_total_score
-    GameStatistics.new.highest_total_score(@games)
+    @game_statistics.highest_total_score
   end
 
   def lowest_total_score
-    GameStatistics.new.lowest_total_score(@games)
+    @game_statistics.lowest_total_score
   end
 
   def percentage_home_wins
-    GameStatistics.new.percentage_home_wins(@games)
+    @game_statistics.percentage_home_wins
   end
 
   def percentage_visitor_wins
-    GameStatistics.new.percentage_visitor_wins(@games)
+    @game_statistics.percentage_visitor_wins
   end
 
   def percentage_ties
-    GameStatistics.new.percentage_ties(@games)
+    @game_statistics.percentage_ties
   end
 end

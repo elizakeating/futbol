@@ -11,12 +11,8 @@ RSpec.describe GameStatistics do
       teams: @team_path,
       game_teams: @game_teams_path
     }
-    
-    @game_data = CSV.open @locations[:games], headers: true, header_converters: :symbol
-    @teams_data = CSV.open @locations[:teams], headers: true, header_converters: :symbol
-    @game_team_data = CSV.open @locations[:game_teams], headers: true, header_converters: :symbol  
-    
-    @game_stats = GameStatistics.new
+
+    @game_stats = GameStatistics.new(@locations)
   end
 
   describe "#initialize" do
@@ -27,31 +23,31 @@ RSpec.describe GameStatistics do
 
   describe "#highest_total_score" do
     it "finds the highest total score from stat data" do
-      expect(@game_stats.highest_total_score(@game_data)).to eq(5)
+      expect(@game_stats.highest_total_score).to eq(5)
     end
   end
 
   describe "lowest_total_score" do
     it "finds the lowest total score from stat data" do
-      expect(@game_stats.lowest_total_score(@game_data)).to eq(1)
+      expect(@game_stats.lowest_total_score).to eq(1)
     end
   end
 
   describe "#percentage_home_wins" do
     it "finds percentage of games that a home team has won(rounded to nearedst 100th)" do
-      expect(@game_stats.percentage_home_wins(@game_data)).to eq(0.68)
+      expect(@game_stats.percentage_home_wins).to eq(0.68)
     end
   end
 
   describe "#percentage_visitor_wins" do
     it "finds percentage of games that a visitor team has won(rounded to nearedst 100th)" do
-      expect(@game_stats.percentage_visitor_wins(@game_data)).to eq(0.26)
+      expect(@game_stats.percentage_visitor_wins).to eq(0.26)
     end
   end
 
   describe "#percent ties" do
     it "finds percntage of tied away and home games" do
-      expect(@game_stats.percentage_ties(@game_data)).to eq(0.05)
+      expect(@game_stats.percentage_ties).to eq(0.05)
     end
   end
 
@@ -60,6 +56,24 @@ RSpec.describe GameStatistics do
       expect(@game_stats.percentage_calculator(13.0, 19.0)).to eq(0.68)
       expect(@game_stats.percentage_calculator(5.0, 19.0)).to eq(0.26)
       expect(@game_stats.percentage_calculator(1.0, 19.0)).to eq(0.05)
+    end
+  end
+
+  describe "#count_of_games_by_season_do" do
+    it "returns a hash with season names as keys and count of games as values" do
+      expect(@game_stats.count_of_games_by_season).to eq({ "20122013" => 19 })
+    end
+  end
+
+  describe "#average_goals_per_game" do
+    it "returns average number of goals scored in a game across all seasons including both home and away goals" do
+      expect(@game_stats.average_goals_per_game).to eq(3.68)
+    end
+  end
+
+  describe "#average_goals_by_season" do
+    it "returns average number of goals scored in a game in that season" do
+      expect(@game_stats.average_goals_by_season).to eq({ "20122013" => 3.68 })
     end
   end
 end
