@@ -11,8 +11,12 @@ RSpec.describe GameStatistics do
       teams: @team_path,
       game_teams: @game_teams_path
     }
-
-    @game_stats = GameStatistics.new(@locations)
+    
+    @game_data = CSV.open @locations[:games], headers: true, header_converters: :symbol
+    @teams_data = CSV.open @locations[:teams], headers: true, header_converters: :symbol
+    @game_team_data = CSV.open @locations[:game_teams], headers: true, header_converters: :symbol  
+    
+    @game_stats = GameStatistics.new
   end
 
   describe "#initialize" do
@@ -23,31 +27,31 @@ RSpec.describe GameStatistics do
 
   describe "#highest_total_score" do
     it "finds the highest total score from stat data" do
-      expect(@game_stats.highest_total_score).to eq(5)
+      expect(@game_stats.highest_total_score(@game_data)).to eq(5)
     end
   end
 
   describe "lowest_total_score" do
     it "finds the lowest total score from stat data" do
-      expect(@game_stats.lowest_total_score).to eq(1)
+      expect(@game_stats.lowest_total_score(@game_data)).to eq(1)
     end
   end
 
   describe "#percentage_home_wins" do
     it "finds percentage of games that a home team has won(rounded to nearedst 100th)" do
-      expect(@game_stats.percentage_home_wins).to eq(0.68)
+      expect(@game_stats.percentage_home_wins(@game_data)).to eq(0.68)
     end
   end
 
   describe "#percentage_visitor_wins" do
     it "finds percentage of games that a visitor team has won(rounded to nearedst 100th)" do
-      expect(@game_stats.percentage_visitor_wins).to eq(0.26)
+      expect(@game_stats.percentage_visitor_wins(@game_data)).to eq(0.26)
     end
   end
 
   describe "#percent ties" do
     it "finds percntage of tied away and home games" do
-      expect(@game_stats.percentage_ties).to eq(0.05)
+      expect(@game_stats.percentage_ties(@game_data)).to eq(0.05)
     end
   end
 
