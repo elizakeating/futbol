@@ -11,10 +11,10 @@ RSpec.describe LeagueStatistics do
       teams: @team_path,
       game_teams: @game_teams_path
     }
-
-    @league_stats = LeagueStatistics.new(@locations)
+    
+    @league = LeagueStatistics.new(@locations)
   end
-
+  
   describe "#initialize" do
     it 'exists' do
       expect(@league_stats).to be_a LeagueStatistics
@@ -38,4 +38,26 @@ RSpec.describe LeagueStatistics do
       expect(@league_stats.best_offense).to eq("FC Dallas")
     end
   end
-end
+
+  it "can show name of the team with the lowest average number of goals scored per game across all seasons." do
+    expect(@league.worst_offense).to eq("Sporting Kansas City")
+  end 
+
+  it "can show name of the team with the highest average score per game across all seasons when they are away." do
+    expect(@league.highest_scoring_visitor).to eq("FC Dallas")
+  end 
+
+  it "can show the name of the team with the highest average score per game across all seasons when they are home." do
+    expect(@league.highest_scoring_home_team).to eq("FC Dallas")
+  end  
+  
+  it "can name of the team with the lowest average score per game across all seasons when they are a visitor." do
+    expect(@league.lowest_scoring_visitor).to eq("Sporting Kansas City")
+  end  
+  
+  it "can name of the team with the lowest average score per game across all seasons when they are at home." do
+    expect(@league.lowest_scoring_home_team).to eq("Sporting Kansas City")
+  end 
+end 
+
+ 
