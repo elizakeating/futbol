@@ -17,4 +17,24 @@ RSpec.describe StatTracker do
   it "exists" do
     expect(@stat_tracker).to be_an_instance_of StatTracker
   end
+
+  it "#highest_total_score" do
+    expect(@stat_tracker.highest_total_score).to eq 11
+  end
+
+  it "#lowest_total_score" do
+    expect(@stat_tracker.lowest_total_score).to eq 0
+  end
+
+  it "#percentage_home_wins" do
+    expect(@stat_tracker.percentage_home_wins).to eq 0.44
+  end
+
+  it "#percentage_visitor_wins" do
+    expect(@stat_tracker.percentage_visitor_wins).to eq 0.36
+  end
+
+  it "#percentage_ties" do
+    expect(@stat_tracker.percentage_ties).to eq 0.20
+  end
 end 
