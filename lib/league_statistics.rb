@@ -107,7 +107,8 @@ class LeagueStatistics
   def average_goals_by_hometeam(team_id)
     home_games = @game_team_data.find_all do |game_team|
       game_team[:hoa]== "home"
-      game_team[:team_id] == team_id 
+      game_team[:team_id] == team_id
+    end
     total_home_goals = home_games.map do |home_game|
       home_game[:goals].to_i 
     end.sum
@@ -133,7 +134,7 @@ class LeagueStatistics
     team = @teams_data.find do |team|
       team[:team_id] == highest_scoring_hometeam
     end 
-      team[:teamname] 
+    team[:teamname]
   end 
 end 
 
