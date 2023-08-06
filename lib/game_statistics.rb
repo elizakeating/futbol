@@ -19,7 +19,7 @@ class GameStatistics
   def highest_total_score
     highest_total_score = 0
     @game_data.each do |row|
-    total_score = row[:away_goals].to_i + row[:home_goals].to_i #away_goals + home_goals
+      total_score = row[:away_goals].to_i + row[:home_goals].to_i 
     highest_total_score = total_score if total_score > highest_total_score
     end
     highest_total_score
@@ -28,7 +28,7 @@ class GameStatistics
   def lowest_total_score
     lowest_total_score = nil
     @game_data.each do |row|
-    total_score = row[:away_goals].to_i + row[:home_goals].to_i #away_goals + home_goals
+    total_score = row[:away_goals].to_i + row[:home_goals].to_i 
       lowest_total_score = total_score if lowest_total_score == nil || total_score < lowest_total_score
     end
     lowest_total_score
