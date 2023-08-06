@@ -13,3 +13,8 @@ class StatTracker
     @teams_data = CSV.read locations[:teams], headers: true, header_converters: :symbol
     @game_team_data = CSV.read locations[:game_teams], headers: true, header_converters: :symbol  
   end
+
+  def self.from_csv(locations)
+    StatTracker.new(locations)
+  end
+end 
