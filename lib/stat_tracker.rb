@@ -1,3 +1,8 @@
+require_relative 'game_statistics.rb'
+require_relative 'league_statistics.rb'
+require_relative 'season_statistics.rb'
+require 'csv'
+
 class StatTracker
   def initialize(locations)
     @locations = locations
