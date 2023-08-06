@@ -66,9 +66,9 @@ class LeagueStatistics
     end 
 
     total_goals = games.map do |game|
-      game[:goals].to_i 
+      game[:goals].to_f 
     end.sum
-    average_goals_per_season = total_goals / games.length 
+    average_goals_per_season = total_goals / games.length.to_f
   end    
 
   def highest_scoring_visitor
@@ -84,13 +84,12 @@ class LeagueStatistics
 
   def average_goals_by_visitor(team_id)
     away_games = @game_team_data.find_all do |game_team|
-      game_team[:hoa]== "away"
-      game_team[:team_id] == team_id
+      game_team[:hoa]== "away" && game_team[:team_id] == team_id
     end
     total_away_goals = away_games.map do |away_game|
-      away_game[:goals].to_i 
+      away_game[:goals].to_f
     end.sum
-    average_goals_by_visitor = total_away_goals / away_games.length  
+    average_goals_by_visitor = total_away_goals / away_games.length.to_f  
   end  
 
   def highest_scoring_home_team
@@ -106,13 +105,12 @@ class LeagueStatistics
 
   def average_goals_by_hometeam(team_id)
     home_games = @game_team_data.find_all do |game_team|
-      game_team[:hoa]== "home"
-      game_team[:team_id] == team_id
+      game_team[:hoa]== "home" && game_team[:team_id] == team_id
     end
     total_home_goals = home_games.map do |home_game|
-      home_game[:goals].to_i 
+      home_game[:goals].to_f
     end.sum
-    average_goals_per_hometeam = total_home_goals / home_games.length 
+    average_goals_per_hometeam = total_home_goals / home_games.length.to_f 
   end  
 
   def lowest_scoring_visitor 
