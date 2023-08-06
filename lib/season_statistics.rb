@@ -15,49 +15,50 @@ class SeasonStatistics
     season_games = find_season_games(season_id)
     season_game_teams = find_season_game_teams(season_games)
 
-    winning_games = Hash.new(0)
-    games_played = Hash.new(0)
+    winning_games = Hash.new(0.0)
+    games_played = Hash.new(0.0)
 
     season_game_teams.each do |row|
       if row[:result] == "WIN"
-        winning_games[row[:team_id]] += 1
-        games_played[row[:team_id]] += 1
+        winning_games[row[:head_coach]] += 1.0
+        games_played[row[:head_coach]] += 1.0
       elsif row[:result] == "LOSS"
-        winning_games[row[:team_id]] = 0
-        games_played[row[:team_id]] += 1
+        winning_games[row[:head_coach]] += 0.0
+        games_played[row[:head_coach]] += 1.0
+      elsif row[:result] == "TIE"
+        winning_games[row[:head_coach]] += 0.0
+        games_played[row[:head_coach]] += 1.0
       end
     end
 
-    successful_team = winning_games.max_by do |team, games_won|
-        (games_won/games_played[team] * 100).to_f
-    end
-
-    get_coach_name(successful_team)
+    winning_team = winning_games.max_by do |team, games_won|
+      (games_won/games_played[team] * 100)
+    end[0]
   end
 
   def worst_coach(season_id)
     season_games = find_season_games(season_id)
-
     season_game_teams = find_season_game_teams(season_games)
 
-    winning_games = Hash.new(0)
-    games_played = Hash.new(0)
+    winning_games = Hash.new(0.0)
+    games_played = Hash.new(0.0)
 
     season_game_teams.each do |row|
       if row[:result] == "WIN"
-        winning_games[row[:team_id]] += 1
-        games_played[row[:team_id]] += 1
+        winning_games[row[:head_coach]] += 1.0
+        games_played[row[:head_coach]] += 1.0
       elsif row[:result] == "LOSS"
-        winning_games[row[:team_id]] = 0
-        games_played[row[:team_id]] += 1
+        winning_games[row[:head_coach]] += 0.0
+        games_played[row[:head_coach]] += 1.0
+      elsif row[:result] == "TIE"
+        winning_games[row[:head_coach]] += 0.0
+        games_played[row[:head_coach]] += 1.0
       end
     end
 
     losing_team = winning_games.min_by do |team, games_won|
-        (games_won/games_played[team] * 100).to_f
-    end
-
-    get_coach_name(losing_team)
+      (games_won/games_played[team] * 100)
+    end[0]
   end
 
   def most_accurate_team(season_id)
@@ -111,7 +112,7 @@ class SeasonStatistics
       tackles[game[:team_id]] += game[:tackles].to_f
     end
     
-    most_tackle_team = tackles.max
+    most_tackle_team = tackles.max_by { |tackle| tackle[1] }
 
     get_team_name(most_tackle_team)
   end
@@ -127,7 +128,7 @@ class SeasonStatistics
       tackles[game[:team_id]] += game[:tackles].to_f
     end
 
-    least_tackle_team = tackles.min
+    least_tackle_team = tackles.min_by { |tackle| tackle[1] }
 
     get_team_name(least_tackle_team)
   end
@@ -137,7 +138,7 @@ class SeasonStatistics
 
     @game_data.each do |row|
       if row[:season] == season_id
-        season_games << row
+        season_games << row[:game_id]
       end
     end
 
@@ -149,23 +150,13 @@ class SeasonStatistics
 
     @game_team_data.each do |row|
       season_games.each do |game|
-        if game[:game_id] == row[:game_id]
+        if game == row[:game_id]
           season_game_teams << row
         end
       end
     end
 
     season_game_teams
-  end
-
-  def get_coach_name(team)
-    coach_name = ""
-    
-    @game_team_data.each do |row|
-      coach_name = row[:head_coach] if row[:team_id] == team[0]
-    end
-
-    coach_name
   end
 
   def get_team_name(team)

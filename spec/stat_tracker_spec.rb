@@ -93,4 +93,28 @@ RSpec.describe StatTracker do
   it "#lowest_scoring_home_team" do
     expect(@stat_tracker.lowest_scoring_home_team).to eq "Utah Royals FC"
   end
+
+  it "#winningest_coach" do
+    expect(@stat_tracker.winningest_coach("20132014")).to eq "Claude Julien"
+  end
+
+  it "#worst_coach" do
+    expect(@stat_tracker.worst_coach("20132014")).to eq "Peter Laviolette"
+  end
+
+  it "#most_accurate_team" do
+    expect(@stat_tracker.most_accurate_team("20132014")).to eq "Real Salt Lake"
+  end
+
+  it "#least_accurate_team" do
+    expect(@stat_tracker.least_accurate_team("20132014")).to eq "New York City FC"
+  end
+
+  it "#most_tackles" do
+    expect(@stat_tracker.most_tackles("20132014")).to eq "FC Cincinnati"
+  end
+
+  it "#fewest_tackles" do
+    expect(@stat_tracker.fewest_tackles("20132014")).to eq "Atlanta United"
+  end
 end 
