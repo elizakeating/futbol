@@ -47,7 +47,7 @@ class LeagueStatistics
     end
     team_name_by_id(highest_average_team_id)
   end
- 
+
   def worst_offense
     team_ids = @game_team_data[:team_id].uniq
     lowest_scoring_team = team_ids.min_by do |team_id|
