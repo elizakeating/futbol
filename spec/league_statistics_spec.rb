@@ -17,25 +17,25 @@ RSpec.describe LeagueStatistics do
   
   describe "#initialize" do
     it 'exists' do
-      expect(@league_stats).to be_a LeagueStatistics
+      expect(@league).to be_a LeagueStatistics
     end
   end
 
   describe "#count_of_teams" do
     it "can show total number of teams" do 
-      expect(@league_stats.count_of_teams).to eq(32)
+      expect(@league.count_of_teams).to eq(32)
     end
   end
 
   describe "#team_name_by_id" do
     it "can show the name of a team based on an id" do 
-      expect(@league_stats.team_name_by_id(6)).to eq("FC Dallas")
+      expect(@league.team_name_by_id(6)).to eq("FC Dallas")
     end
   end
 
   describe "#best_offense" do
     it "can show the name of the team with the highest average number of goals scored per game across all seasons " do 
-      expect(@league_stats.best_offense).to eq("FC Dallas")
+      expect(@league.best_offense).to eq("FC Dallas")
     end
   end
 
