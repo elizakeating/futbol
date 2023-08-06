@@ -4,6 +4,9 @@ require_relative 'season_statistics.rb'
 require 'csv'
 
 class StatTracker
+  attr_reader :game_statistics,
+              :season_statistics, 
+              :league_statistics
   def initialize(locations)
     @locations = locations
     @game_data = CSV.read locations[:games], headers: true, header_converters: :symbol
