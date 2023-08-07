@@ -92,4 +92,22 @@ RSpec.describe LeagueStatistics do
       expect(@league.lowest_scoring_home_team).to eq("Sporting Kansas City")
     end 
   end
+
+  describe "#average_goals_for_team" do
+    it "returns the average number of goals for a team" do
+      expect(@league.average_goals_for_team("6")).to eq(2.6666666666666665)
+    end
+  end
+
+  describe "#average_goals_by_visitor" do
+    it "returns the average number of goals for a visiting team" do
+      expect(@league.average_goals_by_visitor("5")).to eq(0.5)
+    end
+  end 
+
+  describe "#average_goals_by_hometeam" do
+    it "returns the average number of goals for a visiting team" do
+      expect(@league.average_goals_by_hometeam("6")).to eq(2.4)
+    end
+  end 
 end 
