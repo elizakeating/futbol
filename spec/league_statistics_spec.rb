@@ -21,6 +21,30 @@ RSpec.describe LeagueStatistics do
     end
   end
 
+  describe "#locations" do
+    it "returns the location attribute" do
+      expect(@league.locations).to eq(@locations)
+    end
+  end
+
+  describe "#game_data" do
+    it "returns game_data" do
+      expect(@league.game_data).to be_a(CSV::Table)
+    end
+  end
+
+  describe "#teams_data" do
+    it "returns teams_data" do
+      expect(@league.teams_data).to be_a(CSV::Table)
+    end
+  end
+
+  describe "#game_team_data" do
+    it "returns game_team_data" do
+      expect(@league.game_team_data).to be_a(CSV::Table)
+    end
+  end
+
   describe "#count_of_teams" do
     it "can show total number of teams" do 
       expect(@league.count_of_teams).to eq(32)
@@ -39,25 +63,51 @@ RSpec.describe LeagueStatistics do
     end
   end
 
-  it "can show name of the team with the lowest average number of goals scored per game across all seasons." do
-    expect(@league.worst_offense).to eq("Sporting Kansas City")
+  describe "#worst_offense" do
+    it "can show name of the team with the lowest average number of goals scored per game across all seasons." do
+      expect(@league.worst_offense).to eq("Sporting Kansas City")
+    end 
+  end
+
+  describe "#highest_scoring_visitor" do
+    it "can show name of the team with the highest average score per game across all seasons when they are away." do
+      expect(@league.highest_scoring_visitor).to eq("FC Dallas")
+    end 
+  end
+
+  describe "#highest_scoring_home_team" do
+    it "can show the name of the team with the highest average score per game across all seasons when they are home." do
+      expect(@league.highest_scoring_home_team).to eq("FC Dallas")
+    end  
+  end
+  
+  describe "#lowest_scoring_visitor" do
+    it "can name of the team with the lowest average score per game across all seasons when they are a visitor." do
+      expect(@league.lowest_scoring_visitor).to eq("Sporting Kansas City")
+    end  
+  end
+  
+  describe "#lowest_scoring_home_team" do
+    it "can name of the team with the lowest average score per game across all seasons when they are at home." do
+      expect(@league.lowest_scoring_home_team).to eq("Sporting Kansas City")
+    end 
+  end
+
+  describe "#average_goals_for_team" do
+    it "returns the average number of goals for a team" do
+      expect(@league.average_goals_for_team("6")).to eq(2.6666666666666665)
+    end
+  end
+
+  describe "#average_goals_by_visitor" do
+    it "returns the average number of goals for a visiting team" do
+      expect(@league.average_goals_by_visitor("5")).to eq(0.5)
+    end
   end 
 
-  it "can show name of the team with the highest average score per game across all seasons when they are away." do
-    expect(@league.highest_scoring_visitor).to eq("FC Dallas")
-  end 
-
-  it "can show the name of the team with the highest average score per game across all seasons when they are home." do
-    expect(@league.highest_scoring_home_team).to eq("FC Dallas")
-  end  
-  
-  it "can name of the team with the lowest average score per game across all seasons when they are a visitor." do
-    expect(@league.lowest_scoring_visitor).to eq("Sporting Kansas City")
-  end  
-  
-  it "can name of the team with the lowest average score per game across all seasons when they are at home." do
-    expect(@league.lowest_scoring_home_team).to eq("Sporting Kansas City")
+  describe "#average_goals_by_hometeam" do
+    it "returns the average number of goals for a visiting team" do
+      expect(@league.average_goals_by_hometeam("6")).to eq(2.4)
+    end
   end 
 end 
-
- 
